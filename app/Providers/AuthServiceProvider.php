@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Models\Attendee;
 use App\Models\Event;
+use App\Policies\EventPolicy;
+use App\Policies\AttendeePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,6 +20,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         //
+        Attendee::class => AttendeePolicy::class,
+        Event::class => EventPolicy::class,
     ];
 
     /**
@@ -26,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+      /*
         Gate::define("update-event", function ($user, Event $event) {
             return $user->id === $event->user_id;
         });
@@ -35,6 +40,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id === $event->user_id ||
                     $user->id === $attendee->user_id;
 
-        });
+        });*/
     }
 }
