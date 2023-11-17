@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\EventReminderNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -40,7 +41,9 @@ class SendEventRemainders extends Command
 
         $event->each(
             fn($event) => $event->attendees->each(
-                fn($attendee) => $this->info("Nofying the user {$attendee->user->id}")
+                fn($attendee) => $attendee->user->notify(
+                    new EventReminderNotification($event)
+                )
                 )
             );
 
